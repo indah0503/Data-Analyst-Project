@@ -1,3 +1,4 @@
+@Sumber: DQLab
 # Definisikan class Karyawan sebagai parent class
 class Karyawan:
     def __init__(self, nama, usia, pendapatan, insentif_lembur):
