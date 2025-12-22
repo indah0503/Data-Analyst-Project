@@ -1,6 +1,6 @@
-/*
+'''
 Membuat price distribution dari pembelian produk dalam bentuk histogram price
-*/
+'''
 
 import pandas as pd
 import matplotlib.pyplot as plt
