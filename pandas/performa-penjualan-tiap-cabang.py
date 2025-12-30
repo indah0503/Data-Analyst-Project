@@ -83,3 +83,12 @@ print('\nby order (5 data teratas):\n', by_order.head())
 # [8]. Lakukan resampling pada data tersebut untuk dilakukan perhitungan rata-rata bulanan 
 by_order_monthly_mean = by_order.resample('M').mean()
 print('\nby_order_monthly_mean (5 data teratas):\n', by_order_monthly_mean.head())
+
+# [9]. Plot untuk hasil pada langkah #[8]
+by_order_monthly_mean.plot(
+   figsize = (8,5),
+   title = 'Average Daily order Size in Month View for all Province'
+)
+plt.ylabel('avg order size')
+plt.xlabel('month')
+plt.show()
