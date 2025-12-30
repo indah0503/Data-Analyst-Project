@@ -74,3 +74,12 @@ print('\ngroupby_city_province (10 data teratas):\n', groupby_city_province.head
 # [6]. Unstack untuk mendapatkan order_date di bagian baris dan province di bagian column
 unstack_city_province = groupby_city_province.unstack('province').fillna(0)
 print('\nunstack_city_province (5 data teratas):\n', unstack_city_province.head())
+
+# [7]. Slicing data untuk masing-masing measurement, misal: order
+idx = pd.IndexSlice
+by_order = unstack_city_province.loc[:,idx['order']]
+print('\nby order (5 data teratas):\n', by_order.head())
+
+# [8]. Lakukan resampling pada data tersebut untuk dilakukan perhitungan rata-rata bulanan 
+by_order_monthly_mean = by_order.resample('M').mean()
+print('\nby_order_monthly_mean (5 data teratas):\n', by_order_monthly_mean.head())
