@@ -115,3 +115,8 @@ for i, measurement in enumerate(groupby_city_province.columns):
 # Adjust the layout and show the plot
 plt.tight_layout()
 plt.show()
+
+'''
+Pemakaian define function digunakan untuk automate pembuatan dan penyimpanan grafik.
+Jadi tinggal state saja dataframe-nya yang mana dan pengelompokannya seperti apa.
+'''
