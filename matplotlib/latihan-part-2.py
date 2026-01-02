@@ -10,15 +10,19 @@ dataset['order_month'] = dataset['order_date'].apply(lambda x: datetime.datetime
 dataset['gmv'] = dataset['item_price']*dataset['quantity']
 
 ''' Membuat Multi-Line Chart '''
-dataset.groupby(['order_month','brand'])['gmv'].sum().unstack().plot()
+dataset.groupby(['order_month','brand'])['gmv'].sum().unstack().plot() # Line-chart per Brand
 plt.title('Monthly GMV Year 2019 - Breakdown by Brand', loc='center', pad=30, fontsize=20, color='blue')
 plt.xlabel('Order Month', fontsize=15)
 plt.ylabel('Total Amount (in Billions)', fontsize=15)
-plt.grid(color='darkgrey', linestyle=':', linewidth=0.5)
+plt.grid(color='darkgray', linestyle=':', linewidth=0.5)
 plt.ylim(ymin=0)
 labels, locations = plt.yticks()
 plt.yticks(labels, (labels/1000000000).astype(int))
 plt.gcf().set_size_inches(10,5)
 plt.tight_layout()
+plt.show()
+
+''' Kustomisasi Legend '''
+plt.legend(loc='right', bbox_to_anchor=(1.6, 0.5), shadow=True, ncol=2)
 plt.show()
 
