@@ -26,3 +26,5 @@ plt.show()
 plt.legend(loc='right', bbox_to_anchor=(1.6, 0.5), shadow=True, ncol=2)
 plt.show()
 
+''' Kustomisasi Colormap '''
+
