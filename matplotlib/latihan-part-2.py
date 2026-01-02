@@ -68,4 +68,23 @@ plt.gcf().set_size_inches(12, 5)
 plt.tight_layout()
 plt.show()
 
-
+''' Membuat Anotasi '''
+# Anotasi mirip seperti teks, hanya saja ada suatu titik tertentu yang kita tunjuk untuk diberikan informasi tambahan.
+# Selain itu, kita bisa menambahkan panah melalui anotasi.
+# Untuk membuat annotate, gunakan function plt.annotate.
+# Parameter pertama adalah isi teksnya, dan parameter kedua adalah koordinat dari point yang dianotasi.
+# Anotasi pertama
+plt.annotate('GMV other meningkat pesat', xy=(5,900000000),
+			xytext=(4, 1700000000), weight='bold', color='red',
+			arrowprops=dict(arrowstyle='fancy',
+						   connectionstyle='arc3',
+						   color='red'))
+# Anotasi kedua
+plt.annotate('DKI Jakarta mendominasi', xy=(3,3350000000),
+			xytext=(0, 3700000000), weight='bold', color='red',
+			arrowprops=dict(arrowstyle='->',
+						   connectionstyle='angle',
+						   color='red'))
+plt.gcf().set_size_inches(12, 5)
+plt.tight_layout()
+plt.show()
