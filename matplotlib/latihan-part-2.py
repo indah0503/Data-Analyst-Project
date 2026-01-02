@@ -88,3 +88,18 @@ plt.annotate('DKI Jakarta mendominasi', xy=(3,3350000000),
 plt.gcf().set_size_inches(12, 5)
 plt.tight_layout()
 plt.show()
+
+''' Membuat Subset Data '''
+# Fokus analisis behavior transaksi di DKI Jakarta pada bulan Oktober-Desember 2019,
+# karena trend-nya mirip dengan overall GMV.
+# Berhubung fokus ke provinsi DKI Jakarta dan bulan Oktober-Desember 2019,
+# kita filter datanya dan disimpan ke dataframe baru.
+dataset_dki_q4 = dataset[(dataset['province']=='DKI Jakarta') & (dataset['order_month'] >= '2019-10')]
+print(dataset_dki_q4.head())
+
+''' Membuat Pie Chart '''
+gmv_per_city_dki_q4 = dataset_dki_q4.groupby('city')['gmv'].sum().reset_index()
+plt.figure(figsize=(6,6))
+plt.pie(gmv_per_city_dki_q4['gmv'], labels = gmv_per_city_dki_q4['city'],autopct='%1.2f%%')
+plt.title('GMV Contribution Per City - DKI Jakarta in Q4 2019', loc='center', pad=30, fontsize=15, color='blue')
+plt.show()
