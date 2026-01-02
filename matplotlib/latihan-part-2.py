@@ -130,7 +130,7 @@ plt.tight_layout()
 plt.show()
 
 ''' Membuat Stacked Chart '''
-dataset_dki_q4.groupby(['order_month','city'])['gmv'].sum().short_values(ascending=False).unstack().plot(kind='bar', stacked=True)
+dataset_dki_q4.groupby(['order_month','city'])['gmv'].sum().sort_values(ascending=False).unstack().plot(kind='bar', stacked=True)
 plt.title('GMV Per Month, Breakdown by City\nDKI Jakarta in Q4 2019',loc='center',pad=30, fontsize=15, color='blue')
 plt.xlabel('Order Month', fontsize=12)
 plt.ylabel('Total Amount (in Billions)', fontsize = 12)
@@ -141,3 +141,11 @@ plt.yticks(labels, (labels/1000000000).astype(int))
 plt.xticks(rotation=0)
 plt.tight_layout()
 plt.show()
+
+''' Membuat Agregat Data Customer '''
+# Bagaimana dengan customer di DKI Jakarta? Apakah ada pola-pola menarik, terutama di Q4 2019?
+
+# Di sini menggunakan function agg untuk melakukan agregasi data.
+# Data agregat per customer yang diambil yaitu jumlah orders (banyaknya unique order_id), total quantity, dan total GMV.
+# Lalu didapatkan 711 customers yang bertransaksi di DKI Jakarta pada Q4 2020.
+# Jika diurutkan dari jumlah order terbanyak, bisa dilihat bahwa customer_id 12748 telah melakukan 29 transaksi dengan jumlah quantity mencapai 557, dan GMV lebih dari 175 Juta.
