@@ -144,8 +144,32 @@ plt.show()
 
 ''' Membuat Agregat Data Customer '''
 # Bagaimana dengan customer di DKI Jakarta? Apakah ada pola-pola menarik, terutama di Q4 2019?
-
+data_per_customer = (dataset_dki_q4.groupby('customer_id')
+                                   .agg({'order_id':'nunique', 
+                                         'quantity': 'sum', 
+                                         'gmv':'sum'})
+                                   .reset_index()
+                                   .rename(columns={'order_id':'orders'}))
+print(data_per_customer.sort_values(by='orders',ascending=False))
 # Di sini menggunakan function agg untuk melakukan agregasi data.
 # Data agregat per customer yang diambil yaitu jumlah orders (banyaknya unique order_id), total quantity, dan total GMV.
 # Lalu didapatkan 711 customers yang bertransaksi di DKI Jakarta pada Q4 2020.
 # Jika diurutkan dari jumlah order terbanyak, bisa dilihat bahwa customer_id 12748 telah melakukan 29 transaksi dengan jumlah quantity mencapai 557, dan GMV lebih dari 175 Juta.
+
+''' Membuat Histogram - Part 1 '''
+# Dari dataframe baru "data_per_customer" kita bisa melihat persebaran datanya sekaligus untuk masing-masing variabel.
+plt.clf()
+# Histogram pertama
+plt.figure()
+plt.hist(data_per_customer['orders'])
+plt.show()
+# Gambar Histogram pertama tampak bahwa datanya terlalu berat ke kiri, hampir semua customer hanya bertransaksi kurang dari 10,
+# maka dari itu perlu set range-nya, misalnya hanya dari 1 sampai 5.
+# Histogram kedua
+plt.figure()
+plt.hist(data_per_customer['orders'], range=(1,5))
+plt.title('Distribution of Number of Orders per Customer\nDKI Jakarta in Q4 2019',fontsize=15, color='blue')
+plt.xlabel('Number of Orders', fontsize=12)
+plt.xlabel('Number of Customers', fontsize=12)
+plt.show()
+
