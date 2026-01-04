@@ -108,3 +108,100 @@ print(np.sort(dataset['VisitorType'].unique()))
 # LabelEncoder akan mengurutkan label secara otomatis secara alfabetik lalu mengkonversi pandas objek ke numeris menurut posisi/indeks dari setiap label.
 # Dengan demikian kita telah membuat dataset menjadi bernilai numeris seluruhnya yang siap digunakan untuk pemodelan dengan algoritma machine learning.
 
+
+'' PEMODELAN DENGAN SCIKIT-LEARN '''
+''' Features & Label '''
+# Dalam dataset user online purchase, label target sudah diketahui: kolom Revenue = 1 untuk user yang membeli dan 0 untuk yang tidak membeli => pemodelannya klasifikasi.
+# Untuk melatih dataset menggunakan Scikit-Learn library, dataset perlu dipisahkan ke dalam Features dan Label/Target.
+# Variabel Feature akan terdiri dari variabel yang dideklarasikan sebagai X dan [Revenue] adalah variabel Target yang dideklarasikan sebagai y.
+# Gunakan fungsi drop() untuk menghapus kolom [Revenue] dari dataset.
+# removing the target column Revenue from dataset and assigning to X
+X = dataset.drop(['Revenue'], axis = 1)
+# assigning the target column Revenue to y
+y = dataset['Revenue']
+# checking the shapes
+print("Shape of X:", X.shape)
+print("Shape of y:", y.shape)
+
+''' Training dan Test Dataset '''
+from sklearn.model_selection import train_test_split
+# splitting the X, and y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+# checking the shapes
+print("Shape of X_train :", X_train.shape) # Shape of X_train : (9864, 17)
+print("Shape of y_train :", y_train.shape) # Shape of y_train : (9864,)
+print("Shape of X_test :", X_test.shape) # Shape of X_test : (2466, 17)
+print("Shape of y_test :", y_test.shape) # Shape of y_test : (2466,)
+
+''' Training Model: Fit '''
+# Sekarang saatnya kita melatih model atau training.
+# Dengan Scikit-Learn, proses ini cukup dengan memanggil nama algorithm yang akan kita gunakan:
+# - Classifier untuk problem klasifikasi
+# - Regressor untuk problem regresi.
+from sklearn.tree import DecisionTreeClassifier
+# Call the classifier
+model = DecisionTreeClassifier()
+# Fit the classifier to the training data
+model = model.fit(X_train, y_train)
+
+''' Training Model: Predict '''
+# Setelah model/classifier terbentuk, selanjutnya kita memprediksi LABEL dari testing dataset (X_test).
+# Langkah ini menggunakan fungsi .predict().
+# Fungsi ini akan mengembalikan hasil prediksi untuk setiap data point dari X_test dalam bentuk array.
+# Proses ini kita kenal dengan TESTING.
+# Apply the classifier/model to the test data
+y_pred = model.predict(X_test)
+print(y_pred.shape) # (2466,)
+
+''' Evaluasi Model Performance '''
+# evaluating the model
+print('Training Accuracy :', model.score(X_train, y_train))
+print('Testing Accuracy :', model.score(X_test, y_test))
+# confusion matrix
+print('\nConfusion matrix:')
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+# classification report
+print('\nClassification report:')
+cr = classification_report(y_test, y_pred)
+print(cr)
+## [OUTPUT]
+## Training Accuracy : 1.0
+## Testing Accuracy : 0.8605028386050284
+
+## Confusion matrix:
+## [[1881  163]
+##  [ 181  241]]
+
+## Classification report:
+##               precision    recall  f1-score   support
+## 
+##        False       0.91      0.92      0.92      2044
+##         True       0.60      0.57      0.58       422
+## 
+##     accuracy                           0.86      2466
+##    macro avg       0.75      0.75      0.75      2466
+## weighted avg       0.86      0.86      0.86      2466
+
+'' ALGORITMA MACHINE LEARNING '''
+''' Classification : Logistic Regression '''
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report
+# Call the classifier
+logreg = LogisticRegression()
+# Fit the classifier to the training data  
+logreg = logreg.fit(X_train, y_train)
+#Training Model: Predict 
+y_pred = logreg.predict(X_test)
+#Evaluate Model Performance
+print('Training Accuracy :', logreg.score(X_train, y_train))  
+print('Testing Accuracy :', logreg.score(X_test, y_test))  
+# confusion matrix
+print('\nConfusion matrix')  
+cm = confusion_matrix(y_test, y_pred)  
+print(cm)
+# classification report  
+print('\nClassification report')  
+cr = classification_report(y_test, y_pred)  
+print(cr)
+
