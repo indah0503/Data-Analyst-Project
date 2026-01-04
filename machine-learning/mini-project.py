@@ -14,7 +14,7 @@ Adapun feature - feature dalam dataset ini adalah :
 - 'Clicked on Ad' : mengindikasikan user mengklik promo banner atau tidak (0 = tidak; 1 = klik).
 '''
 
-''' LANGKAH 1: Data eksplorasi dengan head(), info(), describe(), shape '''
+''' LANGKAH 1: Data eksplorasi '''
 #import library 
 import pandas as pd
 
@@ -32,3 +32,10 @@ print(data.describe())
 print("Ukuran dataset:")
 print(data.shape)
 
+#2. Data eksplorasi dengan dengan mengecek korelasi dari setiap feature menggunakan fungsi corr()
+print("\n[2] Data eksplorasi dengan dengan mengecek korelasi dari setiap feature menggunakan fungsi corr()")
+print(data.corr())
+
+#3. Data eksplorasi dengan mengecek distribusi label menggunakan fungsi groupby() dan size()
+print("\n[3] Data eksplorasi dengan mengecek distribusi label menggunakan fungsi groupby() dan size()")
+print(data.groupby('Clicked on Ad').size())
