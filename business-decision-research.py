@@ -135,3 +135,24 @@ print(df.head())
 
 
 ''' [2] DATA VISUALIZATION '''
+# Customer Acquisition by Year
+import matplotlib.pyplot as plt
+df['Year_First_Transaction'] = df['First_Transaction'].dt.year
+df['Year_Last_Transaction'] = df['Last_Transaction'].dt.year
+df_year = df.groupby(['Year_First_Transaction'])['Customer_ID'].count()
+df_year.plot(x='Year_First_Transaction', y='Customer_ID', kind='bar', title='Graph of Customer Acquisition')
+plt.xlabel('Year_First_Transaction')
+plt.ylabel('Num_of_Customer')
+plt.tight_layout()
+plt.show()
+
+# Transaction by Year
+import matplotlib.pyplot as plt
+plt.clf()
+df_year = df.groupby(['Year_First_Transaction'])['Count_Transaction'].sum()
+df_year.plot(x='Year_First_Transaction', y='Count_Transaction', kind='bar', title='Graph of Transaction Customer')
+plt.xlabel('Year_First_Transaction')
+plt.ylabel('Num_of_Transaction')
+plt.tight_layout()
+plt.show()
+
