@@ -168,3 +168,72 @@ plt.tight_layout()
 plt.show()
 
 # Proporsi Churned Customer untuk Setiap Produk
+import matplotlib.pyplot as plt
+plt.clf()
+df_piv = df.pivot_table(index='is_churn', 
+                        columns='Product',
+                        values='Customer_ID', 
+                        aggfunc='count', 
+                        fill_value=0)
+plot_product = df_piv.count().sort_values(ascending=False).head(5).index
+df_piv = df_piv.reindex(columns=plot_product)
+df_piv.plot.pie(subplots=True,
+                figsize=(10, 7),
+                layout=(-1, 2),
+                autopct='%1.0f%%',
+                title='Proportion Churn by Product')
+plt.tight_layout()
+plt.show()
+
+# Distribusi Kategorisasi Count Transaction
+import matplotlib.pyplot as plt
+plt.clf()
+def func(row):
+    if row['Count_Transaction'] == 1:
+        val = '1. 1'
+    elif (row['Count_Transaction'] > 1 and row['Count_Transaction'] <= 3):
+        val ='2.2 - 3'
+    elif (row['Count_Transaction'] > 3 and row['Count_Transaction'] <= 6):
+        val ='3.4 - 6'
+    elif (row['Count_Transaction'] > 6 and row['Count_Transaction'] <= 10):
+        val ='4.7 - 10'
+    else:
+        val ='5. >10'
+    return val
+df['Count_Transaction_Group'] = df.apply(func, axis=1)
+df_year = df.groupby(['Count_Transaction_Group'])['Customer_ID'].count()
+df_year.plot(x='Count_Transaction_Group', y='Customer_ID', kind='bar', title='Customer Distribution by Count Transaction Group')
+plt.xlabel('Count_Transaction_Group')
+plt.ylabel('Num_of_Customer')
+plt.tight_layout()
+plt.show()
+
+# Distribusi Kategorisasi Average Transaction Amount
+import matplotlib.pyplot as plt
+plt.clf()
+def f(row):
+    if (row['Average_Transaction_Amount'] >= 100000 and row['Average_Transaction_Amount'] <=250000):
+        val ='1. 100.000 - 250.000'
+    elif (row['Average_Transaction_Amount'] > 250000 and row['Average_Transaction_Amount'] <=500000):
+        val ='2. >250.000 - 500.000'
+    elif (row['Average_Transaction_Amount'] > 500000 and row['Average_Transaction_Amount'] <=750000):
+        val ='3. >500.000 - 750.000'
+    elif (row['Average_Transaction_Amount'] > 750000 and row['Average_Transaction_Amount'] <=1000000):
+        val ='4. >750.000 - 1.000.000'
+    elif (row['Average_Transaction_Amount'] > 1000000 and row['Average_Transaction_Amount'] <=2500000):
+        val ='5. >1.000.000 - 2.500.000'
+    elif (row['Average_Transaction_Amount'] > 2500000 and row['Average_Transaction_Amount'] <=5000000):
+        val ='6. >2.500.000 - 5.000.000'
+    elif (row['Average_Transaction_Amount'] > 5000000 and row['Average_Transaction_Amount'] <=10000000):
+        val ='7. >5.000.000 - 10.000.000'
+    else:
+        val ='8. >10.000.000'
+    return val
+df['Average_Transaction_Amount_Group'] = df.apply(f, axis=1)
+df_year = df.groupby(['Average_Transaction_Amount_Group'])['Customer_ID'].count()
+df_year.plot(x='Average_Transaction_Amount_Group', y='Customer_ID', kind='bar', title='Customer Distribution by Average Transaction Amount Group')
+plt.xlabel('Average_Transaction_Amount_Group')
+plt.ylabel('Num_of_Customer')
+plt.tight_layout()
+plt.show()
+
