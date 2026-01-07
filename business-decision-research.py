@@ -156,3 +156,15 @@ plt.ylabel('Num_of_Transaction')
 plt.tight_layout()
 plt.show()
 
+# Average Transaction Amount by Year
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.clf()
+sns.pointplot(data = df.groupby(['Year_First_Transaction', 'Product']).mean().reset_index(),
+			        x='Year_First_Transaction', 
+              y='Average_Transaction_Amount', 
+              hue='Product')
+plt.tight_layout()
+plt.show()
+
+# Proporsi Churned Customer untuk Setiap Produk
