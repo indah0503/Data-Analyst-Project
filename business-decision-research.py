@@ -237,3 +237,10 @@ plt.ylabel('Num_of_Customer')
 plt.tight_layout()
 plt.show()
 
+''' [3] MODELLING '''
+# Feature Columns dan Target
+df['Year_Diff'] = df['Year_Last_Transaction'] - df['Year_First_Transaction']
+feature_columns = ['Average_Transaction_Amount', 'Count_Transaction', 'Year_Diff']
+X = df[feature_columns]
+y = df['is_churn']
+
