@@ -244,3 +244,44 @@ feature_columns = ['Average_Transaction_Amount', 'Count_Transaction', 'Year_Diff
 X = df[feature_columns]
 y = df['is_churn']
 
+# Split X dan y ke dalam bagian training dan testing
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+
+# Train, predict dan evaluate
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+logreg = LogisticRegression()
+logreg.fit(X_train, y_train)
+y_pred = logreg.predict(X_test)
+cnf_matrix = confusion_matrix(y_test, y_pred)
+print('Confusion Matrix:\n', cnf_matrix)
+# Output:
+# Confusion Matrix:
+#  [[    1  8330]
+#  [    3 16666]]
+
+# Visualisasi Confusion Matrix
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.clf()
+class_names = [0, 1] 
+fig, ax = plt.subplots()
+tick_marks = np.arange(len(class_names))
+plt.xticks(tick_marks, class_names)
+plt.yticks(tick_marks, class_names)
+sns.heatmap(pd.DataFrame(cnf_matrix), annot=True, cmap='YlGnBu', fmt='g')
+ax.xaxis.set_label_position('top')
+plt.title('Confusion matrix', y=1.1)
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.tight_layout()
+plt.show()
+
+# Accuracy, Precision, dan Recall
+# Hitung nilai accuracy, precission dan recall berdasarkan nilai target sesungguhnya dan nilai target hasil prediksi.
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+print('Accuracy :', accuracy_score(y_test, y_pred))
+print('Precision:', precision_score(y_test, y_pred, average='micro'))
+print('Recall   :', recall_score(y_test, y_pred, average='micro'))
